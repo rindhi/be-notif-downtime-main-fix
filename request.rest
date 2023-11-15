@@ -1,0 +1,51 @@
+GET http://localhost:5000/employee
+
+###
+GET http://localhost:5000/employee/3
+
+###
+POST http://localhost:5000/employee
+Content-Type: application/json
+
+{
+    "nama": "Fakhri Azra Shafara",
+    "tgl_lahir": "2003-04-23T18:25:43.511Z",
+    "tempat_lahir": "Pemalang",
+    "jenis_kelamin": "Laki-laki",
+    "email": "fakhrishafara@gmail.com",
+    "no_hp": "089690736575",
+    "status": "active",
+    "alamat": "Pedurungan Asri, Pemalang",
+    "keterangan": "Karyawan Magang",
+    "departemens": "operasional",
+    "departemenId": 1,
+    "jabatans": "operator mesin giling",
+    "jabatanId": 1,
+    "problemscw": "Konselet",
+    "problemscwsId": 1
+}
+
+###
+PATCH http://localhost:5000/employee/5
+Content-Type: application/json
+
+{
+                "nama": "Alif Zulfan Haidar Updated",
+                "tgl_lahir": "2007-12-23T18:25:43.511Z",
+                "tempat_lahir": "Pemalang",
+                "jenis_kelamin": "Laki-laki",
+                "email": "alifzulfan@gmail.com",
+                "no_hp": "087654868877",
+                "status": "active",
+                "alamat": "Pedurungan Asri, Pemalang",
+                "keterangan": "sering bolos nih...",
+                "departemens": "operasional",
+                "departemenId": 1,
+                "jabatans": "operator mesin giling",
+                "jabatanId": 1,
+                "problemscw": "Konselet",
+                "problemscwsId": 1
+}
+
+###
+DELETE http://localhost:5000/employee/4

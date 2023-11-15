@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.1.x"]
+}
+
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id_employee      Int                @id @default(autoincrement())
+  nama             String
+  tgl_lahir        DateTime
+  tempat_lahir     String
+  jenis_kelamin    String
+  email            String
+  no_hp            String
+  status           String
+  alamat           String
+  keterangan       String
+  departemens      Departemen?        @relation(fields: [departemenId], references: [id_department])
+  departemenId     Int?
+  jabatanns        Jabatan?           @relation(fields: [jabatanId], references: [id_jabatan])
+  jabatanId        Int?
+  mesin            Mesin[]
+  HistoryKerusakan HistoryKerusakan[]
+}
+
+model Departemen {
+  id_department   Int        @id @default(autoincrement())
+  employees       Employee[]
+  nama_department String
+}
+
+model Jabatan {
+  id_jabatan   Int        @id @default(autoincrement())
+  employees    Employee[]
+  nama_jabatan String
+}
+
+model ProblemScw {
+  id_scw    Int                @id @default(autoincrement())
+  history   HistoryKerusakan[]
+  jenis_scw String
+  Mesin     Mesin[]
+}
+
+model HistoryKerusakan {
+  id_kerusakan  Int         @id @default(autoincrement())
+  problemscws   ProblemScw? @relation(fields: [problemscwsId], references: [id_scw])
+  problemscwsId Int?
+  mesin         Mesin?      @relation(fields: [mesinId], references: [id_mesin])
+  mesinId       Int?
+  lokasi        Lokasi?     @relation(fields: [lokasiId], references: [id_lokasi])
+  lokasiId      Int?
+  pic_related   Employee?   @relation(fields: [picId], references: [id_employee])
+  picId         Int?
+  start_time    DateTime    @default(now())
+  end_time      DateTime?
+}
+
+model Mesin {
+  id_mesin        Int                @id @default(autoincrement())
+  nama_mesin      String
+  tipe_mesin      String
+  status_mesin    ProblemScw?        @relation(fields: [status_mesins], references: [id_scw])
+  status_mesins   Int?
+  deskripsi_mesin String
+  history         HistoryKerusakan[]
+  employees       Employee?          @relation(fields: [employeeId], references: [id_employee])
+  employeeId      Int?
+}
+
+model User {
+  id_user    Int       @id @default(autoincrement())
+  nama       String
+  username   String
+  password   String
+  status     Boolean   @default(false)
+  tgl_buat   DateTime
+  tgl_update DateTime?
+}
+
+model Lokasi {
+  id_lokasi   Int                @id @default(autoincrement())
+  nama_lokasi String
+  history     HistoryKerusakan[]
+}
